@@ -13,3 +13,5 @@ services/__pycache__/telegram_service.cpython-313.pyc
 utils/__pycache__/__init__.cpython-313.pyc
 utils/__pycache__/helpers.cpython-313.pyc
 utils/__pycache__/logger.cpython-313.pyc
+venv/
+__pycache__/
