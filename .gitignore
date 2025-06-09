@@ -2,3 +2,14 @@
 logs/services.data_service.log
 logs/services.telegram_service.log
 
+config/__pycache__/__init__.cpython-313.pyc
+config/__pycache__/settings.cpython-313.pyc
+database/__pycache__/__init__.cpython-313.pyc
+database/__pycache__/connection.cpython-313.pyc
+database/__pycache__/queries.cpython-313.pyc
+services/__pycache__/__init__.cpython-313.pyc
+services/__pycache__/data_service.cpython-313.pyc
+services/__pycache__/telegram_service.cpython-313.pyc
+utils/__pycache__/__init__.cpython-313.pyc
+utils/__pycache__/helpers.cpython-313.pyc
+utils/__pycache__/logger.cpython-313.pyc
