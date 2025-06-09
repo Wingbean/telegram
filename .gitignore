@@ -1,3 +1,4 @@
 .env
 logs/services.data_service.log
 logs/services.telegram_service.log
+
