@@ -3,9 +3,12 @@ Service layer that contains business logic for messaging and processing.
 """
 
 from .telegram_service import send_report_to_telegram
-from .data_service import fetch_pending_registration_patients
+from .data_service import _fetch_sql_to_df, fetch_noregisdate, fetch_count_pt_dep
+
 
 __all__ = [
     'send_report_to_telegram',
-    'fetch_pending_registration_patients'
+    '_fetch_sql_to_df',
+    'fetch_noregisdate',
+    'fetch_count_pt_dep'
 ]

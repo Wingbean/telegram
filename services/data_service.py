@@ -6,21 +6,22 @@ from utils.logger import setup_logger
 
 logger = setup_logger(__name__)
 
-def fetch_pending_registration_patients():
+def _fetch_sql_to_df(sql_filename, columns):
+    """โหลด SQL, ดึงข้อมูลจาก DB และแปลงเป็น DataFrame"""
     try:
         conn = get_connection()
         cursor = conn.cursor()
 
-        query = load_sql("noregisdate.sql")
+        query = load_sql(sql_filename)
         cursor.execute(query)
         results = cursor.fetchall()
 
-        df = pd.DataFrame(results, columns=['HN', 'Regdate'])
+        df = pd.DataFrame(results, columns=columns)
 
         # แปลง Decimal เป็น string
         df = df.applymap(lambda x: str(x) if isinstance(x, Decimal) else x)
 
-        logger.info(f"Fetched {len(df)} rows from DB.")
+        logger.info(f"Fetched {len(df)} rows from DB from {sql_filename}")
         return df
 
     except Error as e:
@@ -32,3 +33,13 @@ def fetch_pending_registration_patients():
             cursor.close()
         if 'conn' in locals() and conn.is_connected():
             conn.close()
+
+
+def fetch_noregisdate():
+    """ดึงข้อมูลผู้ป่วยที่ยังไม่มีวันลงทะเบียน"""
+    return _fetch_sql_to_df("noregisdate.sql", ["HN", "Regdate"])
+
+
+def fetch_count_pt_dep():
+    """ดึงข้อมูลจำนวนผู้ใช้บริการแยกแผนก"""
+    return _fetch_sql_to_df("count_pt_dep.sql", ["Code", "Dept", "Count"])
