@@ -5,5 +5,6 @@ SELECT
 FROM ovst o 
 LEFT OUTER JOIN kskdepartment k ON k.depcode = o.main_dep 
 WHERE o.vstdate BETWEEN CURDATE() AND CURDATE() AND o.main_dep != "999"
-GROUP BY o.main_dep 
+GROUP BY o.main_dep
+ORDER BY COUNT(vn) DESC
 ;
