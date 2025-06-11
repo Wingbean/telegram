@@ -5,6 +5,7 @@ import os
 from dotenv import load_dotenv
 import re
 from datetime import date
+from tabulate import tabulate
 
 
 load_dotenv()
@@ -20,21 +21,36 @@ def send_report_to_telegram(df, title, chat_group):
         return
     
     date_str = date.today().isoformat()
-
+    """
     if df.empty:
         intro = f"{title}\nประจำวันที่ {date_str} \n \n"
         message = intro + "--ไม่พบข้อมูลผู้ป่วยที่เข้าเงื่อนไขในวันนี้--"
     else:
         
         intro = f"{title}\n \nประจำวันที่ {date_str} \n"
-        df_text = df.to_markdown(index=False)
+        #df_text = df.to_markdown(index=False)
+        df_text = tabulate(df.values.tolist(), headers=df.columns.tolist(), tablefmt="plain")
         message = intro + "\n" + df_text
+    """
+    if df.empty:
+        message = f"{title}\n\nประจำวันที่ {date_str}\n\n<pre>--ไม่พบข้อมูลผู้ป่วยที่เข้าเงื่อนไขในวันนี้--</pre>"
+    else:
+        #table_text = tabulate(df, headers="keys", tablefmt="psql", showindex=False)
+        table_text = tabulate(
+            df,
+            headers="keys",
+            tablefmt="psql",
+            showindex=False,
+            colalign=("center", "left", "right")  # Fix vertical line alignment
+        )
+        message = f"{title}\n\nประจำวันที่ {date_str}\n\n<pre>{table_text}</pre>"
 
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     payload = {
         "chat_id": chat_id,
         "text": message,
-        "parse_mode": "Markdown"
+        #"parse_mode": "Markdown"
+        "parse_mode": "HTML"
     }
 
     try:
