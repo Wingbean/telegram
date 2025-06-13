@@ -35,13 +35,22 @@ def send_report_to_telegram(df, title, chat_group):
     if df.empty:
         message = f"{title}\n\nประจำวันที่ {date_str}\n\n<pre>--ไม่พบข้อมูลผู้ป่วยที่เข้าเงื่อนไขในวันนี้--</pre>"
     else:
-        #table_text = tabulate(df, headers="keys", tablefmt="psql", showindex=False)
+        col_count = len(df.columns)
+
+        # กำหนด colalign ให้ตรงกับจำนวนคอลัมน์ เช่น คอลัมน์แรกชิดกลาง, คอลัมน์สุดท้ายชิดขวา, ที่เหลือชิดซ้าย
+        if col_count == 1:
+            colalign = ("center",)
+        elif col_count == 2:
+            colalign = ("center", "right")
+        else:
+            colalign = ("center",) + ("left",) * (col_count - 2) + ("right",)
+
         table_text = tabulate(
             df,
             headers="keys",
             tablefmt="psql",
             showindex=False,
-            colalign=("center", "left", "right")  # Fix vertical line alignment
+            colalign=colalign
         )
         message = f"{title}\n\nประจำวันที่ {date_str}\n\n<pre>{table_text}</pre>"
 

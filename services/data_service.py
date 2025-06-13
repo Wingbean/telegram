@@ -37,7 +37,7 @@ def _fetch_sql_to_df(sql_filename, columns):
 
 def fetch_noregisdate():
     """ดึงข้อมูลผู้ป่วยที่ยังไม่มีวันลงทะเบียน"""
-    return _fetch_sql_to_df("noregisdate.sql", ["HN", "Regdate"])
+    return _fetch_sql_to_df("noregisdate.sql", ["HN"])
 
 
 def fetch_count_pt_dep():
