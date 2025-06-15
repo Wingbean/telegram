@@ -33,7 +33,7 @@ def send_report_to_telegram(df, title, chat_group):
         message = intro + "\n" + df_text
     """
     if df.empty:
-        message = f"{title}\n\nประจำวันที่ {date_str}\n\n<pre>--ไม่พบข้อมูลผู้ป่วยที่เข้าเงื่อนไขในวันนี้--</pre>"
+        message = f"{title}\n\nประจำวันที่ {date_str}\n\n--ไม่พบข้อมูลผู้ป่วยที่เข้าเงื่อนไขในวันนี้--"
     else:
         col_count = len(df.columns)
 
@@ -52,14 +52,14 @@ def send_report_to_telegram(df, title, chat_group):
             showindex=False,
             colalign=colalign
         )
-        message = f"{title}\n\nประจำวันที่ {date_str}\n\n<pre>{table_text}</pre>"
+        message = f"{title}\n\nประจำวันที่ {date_str}\n\n{table_text}"
 
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     payload = {
         "chat_id": chat_id,
         "text": message,
         #"parse_mode": "Markdown"
-        "parse_mode": "HTML"
+        #"parse_mode": "HTML"
     }
 
     try:
