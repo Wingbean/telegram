@@ -15,3 +15,4 @@ utils/__pycache__/helpers.cpython-313.pyc
 utils/__pycache__/logger.cpython-313.pyc
 venv/
 __pycache__/
+logs/
