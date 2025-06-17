@@ -66,62 +66,7 @@ def send_report_to_line(df, title, group):
     except Exception as e:
         logger.error(f"[LINE] Exception for GROUP: {group} - {e}")
 
-
-def send_dataframe_as_line_image(df, title, group):
-
-    recipient_id = LINE_RECIPIENT_IDS.get(group)
-
-    if not recipient_id:
-        logger.warning(f"[LINE] Unknown group: {group}")
-        return
-
-    try:
-        # สร้าง image จาก dataframe ด้วย styler
-        styler = (
-            df.style
-            .hide(axis="index")
-            .set_caption(title)
-            .set_table_styles([
-                {"selector": "caption", "props": [("font-size", "16px"), ("font-weight", "bold")]},
-                {"selector": "thead th", "props": [("background-color", "#4CAF50"), ("color", "white")]}
-            ])
-            .set_properties(**{
-                "font-family": "Tahoma",
-                "text-align": "center",
-                "border": "1px solid #ccc"
-            })
-        )
-
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as tmpfile:
-            dfi.export(styler, tmpfile.name)
-
-            with open(tmpfile.name, "rb") as image_file:
-                headers = {
-                    "Authorization": f"Bearer {LINE_ACCESS_TOKEN}"
-                }
-                files = {
-                    "message": (None, json.dumps({
-                        "to": recipient_id,
-                        "messages": [{
-                            "type": "image",
-                            "originalContentUrl": "https://example.com/fake.png",  # Required placeholder
-                            "previewImageUrl": "https://example.com/fake.png"
-                        }]
-                    })),
-                    "imageFile": image_file
-                }
-
-                response = requests.post("https://api-data.line.me/v2/bot/message/push", headers=headers, files=files)
-
-                if response.ok:
-                    logger.info(f"[LINE] Image sent to GROUP: {group}")
-                else:
-                    logger.warning(f"[LINE] Image failed for GROUP: {group} - {response.text}")
-
-    except Exception as e:
-        logger.error(f"[LINE] Exception while sending image: {e}")
-
-
+# ส่ง Flex เข้า Line
 def send_dataframe_as_line_flex(df, title, group):
 
     recipient_id = LINE_RECIPIENT_IDS.get(group)
