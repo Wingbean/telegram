@@ -32,5 +32,7 @@ DB_CONFIG = {
 }
 
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+TELEGRAM_CHAT_IDS = json.loads(os.getenv("TELEGRAM_CHAT_IDS", "{}"))
 
-TELEGRAM_CHAT_IDS = json.loads(os.getenv("TELEGRAM_CHAT_ID", "{}"))
+LINE_ACCESS_TOKEN = os.getenv("LINE_ACCESS_TOKEN")
+LINE_RECIPIENT_IDS = json.loads(os.getenv("LINE_RECIPIENT_IDS", "{}"))
