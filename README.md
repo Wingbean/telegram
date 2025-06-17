@@ -9,7 +9,7 @@
 2. สร้าง virtual environment: `python -m venv venv`
 3. เปิดใช้งาน: `source venv/bin/activate` (Linux/Mac) หรือ `venv\Scripts\activate` (Windows)
 4. ติดตั้ง dependencies: `pip install -r requirements.txt`
-5. คัดลอก `.env.example` เป็น `.env` และแก้ไขค่า
+5. คัดลอก `.env.example` เป็น `.env` และแก้ไข
 6. สร้างโฟลเดอร์ `sql` และวางไฟล์ SQL
 7. รันโปรแกรม: `python main.py`
 
