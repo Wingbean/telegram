@@ -17,8 +17,8 @@ def main():
 
     send_report_to_telegram(df2, "รายงาน ผู้มาใช้บริการแยกแผนก", "test")
     send_dataframe_as_image(df2, "รายงาน ผู้มาใช้บริการแยกแผนก", "test")
-    send_report_to_line(df2, "รายงาน ผู้มาใช้บริการแยกแผนก", "me")
-    #send_dataframe_as_line_flex(df2, "รายงาน ผู้มาใช้บริการแยกแผนก", "me")
+    #send_report_to_line(df2, "รายงาน ผู้มาใช้บริการแยกแผนก", "me")
+    send_dataframe_as_line_flex(df2, "รายงาน ผู้มาใช้บริการแยกแผนก", "me")
 
 if __name__ == "__main__":
     main()

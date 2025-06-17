@@ -66,9 +66,8 @@ def send_report_to_line(df, title, group):
     except Exception as e:
         logger.error(f"[LINE] Exception for GROUP: {group} - {e}")
 
-# ส่ง Flex เข้า Line
 def send_dataframe_as_line_flex(df, title, group):
-
+    
     recipient_id = LINE_RECIPIENT_IDS.get(group)
 
     if not recipient_id:
@@ -77,55 +76,132 @@ def send_dataframe_as_line_flex(df, title, group):
 
     try:
         date_str = date.today().strftime("%Y-%m-%d")
-        rows = []
-        for _, row in df.iterrows():
-            row_items = []
-            for item in row:
-                row_items.append({
+
+        data_rows = []
+
+        # 👇 สร้างหัวตาราง (Header)
+        header_row = {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+                {
                     "type": "text",
-                    "text": str(item),
+                    "text": str(col),
                     "size": "sm",
+                    "color": "#888888",
+                    "weight": "bold",
+                    "flex": 1,
                     "wrap": True
-                })
-            rows.append({
+                }
+                for col in df.columns
+            ]
+        }
+        data_rows.append(header_row)
+
+        # 👇 สร้าง row สำหรับข้อมูล
+        for _, row in df.iterrows():
+            contents = []
+            for i, col in enumerate(df.columns):
+                cell = {
+                    "type": "text",
+                    "text": str(row[col]),
+                    "size": "sm",
+                    "color": "#111111",
+                    "flex": 1,
+                    "wrap": True,
+                }
+                # 👇 ชิดขวาเฉพาะ column สุดท้าย
+                if i == len(df.columns) - 1:
+                    cell["align"] = "start"
+                contents.append(cell)
+
+            data_rows.append({
                 "type": "box",
                 "layout": "horizontal",
-                "contents": row_items,
-                "spacing": "sm"
+                "contents": contents
             })
 
+        # 👇 สร้าง Flex Message
         flex_message = {
             "type": "flex",
             "altText": title,
             "contents": {
                 "type": "bubble",
-                "header": {
-                    "type": "box",
-                    "layout": "vertical",
-                    "contents": [
-                        {"type": "text", "text": title, "weight": "bold", "size": "lg"},
-                        {"type": "text", "text": f"ประจำวันที่ {date_str}", "size": "xs", "color": "#aaaaaa"}
-                    ]
-                },
                 "body": {
                     "type": "box",
                     "layout": "vertical",
-                    "contents": rows
+                    "contents": [
+                        {
+                            "type": "text",
+                            "text": title,
+                            "weight": "bold",
+                            "color": "#1DB446",
+                            "size": "sm"
+                        },
+                        {
+                            "type": "text",
+                            "text": f"วันที่ {date_str}",
+                            "weight": "bold",
+                            "size": "xxl",
+                            "margin": "md"
+                        },
+                        {
+                            "type": "separator",
+                            "margin": "xxl"
+                        },
+                        {
+                            "type": "box",
+                            "layout": "vertical",
+                            "margin": "xxl",
+                            "spacing": "sm",
+                            "contents": data_rows
+                        },
+                        {
+                            "type": "separator",
+                            "margin": "xxl"
+                        },
+                        {
+                            "type": "box",
+                            "layout": "horizontal",
+                            "margin": "md",
+                            "contents": [
+                                {
+                                    "type": "text",
+                                    "text": "Power By",
+                                    "size": "xs",
+                                    "color": "#aaaaaa",
+                                    "flex": 0
+                                },
+                                {
+                                    "type": "text",
+                                    "text": "DataSloth",
+                                    "color": "#aaaaaa",
+                                    "size": "xs",
+                                    "align": "end"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "styles": {
+                    "footer": {
+                        "separator": True
+                    }
                 }
             }
         }
 
+        # ส่งข้อความเข้า LINE API
         headers = {
             "Authorization": f"Bearer {LINE_ACCESS_TOKEN}",
             "Content-Type": "application/json"
         }
-
         payload = {
             "to": recipient_id,
             "messages": [flex_message]
         }
-
         response = requests.post("https://api.line.me/v2/bot/message/push", headers=headers, json=payload)
+
         if response.ok:
             logger.info(f"[LINE] Flex message sent to GROUP: {group}")
         else:
