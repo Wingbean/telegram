@@ -43,3 +43,11 @@ def fetch_noregisdate():
 def fetch_count_pt_dep():
     """ดึงข้อมูลจำนวนผู้ใช้บริการแยกแผนก"""
     return _fetch_sql_to_df("count_pt_dep.sql", ["Code", "Dept", "Count"])
+
+def fetch_count_admit():
+    """ดึงข้อมูลจำนวนผู้ป่วย admit แยกวอร์ด"""
+    return _fetch_sql_to_df("count_admit.sql", ["Ward", "Count"])
+
+def fetch_ward_status():
+    """สถานะเตียงในวอร์ด"""
+    return _fetch_sql_to_df("ward_status.sql", ["Ward", "CountBed"])

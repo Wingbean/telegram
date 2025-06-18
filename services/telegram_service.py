@@ -88,7 +88,7 @@ def send_dataframe_as_image(df, title, chat_group):
         styler = (
             df.style
             .hide(axis="index")  # ซ่อน index
-            .set_caption("รายงานผู้มาใช้บริการแยกแผนก")  # ตั้งหัวตาราง
+            .set_caption(f"{title}")  # ตั้งหัวตาราง
             .set_table_styles([
                 {
                     "selector": "caption",
