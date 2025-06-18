@@ -4,6 +4,9 @@ SELECT
 		WHEN k.department = "คลินิกวัณโรค/ฝ่ายสุขาภิบาลฯ" THEN "ห้องเบอร์ 9"
 		WHEN k.department = "จุดซักประวัติ" THEN "OPD"
 		WHEN k.department = "คลินิกดอกลำดวน" THEN "NCD"
+		WHEN k.department = "ห้องฉุกเฉิน (ER)" THEN "ER"
+		WHEN k.department = "คลินิกไข้หวัด" THEN "ARI"
+		WHEN k.department = "ห้องคลอด" THEN "LR"
 		ELSE k.department
 	END AS "DeptName"
 	,COUNT(vn) AS "จำนวน"
