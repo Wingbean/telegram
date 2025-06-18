@@ -112,7 +112,7 @@ def send_dataframe_as_line_flex(df, title, group):
                 }
                 # 👇 ชิดขวาเฉพาะ column สุดท้าย
                 if i == len(df.columns) - 1:
-                    cell["align"] = "start"
+                    cell["align"] = "center"
                 contents.append(cell)
 
             data_rows.append({

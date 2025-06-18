@@ -9,7 +9,7 @@ def main():
 
     send_report_to_telegram(df1, "รายงาน HN ไม่มีวันลงทะเบียน", "test")
     #send_report_to_line(df1, "รายงาน HN ผู้ป่วยยังไม่มีวันลงทะเบียน", "me")
-    send_dataframe_as_line_flex(df1, "รายงาน HN ไม่มีวันลงทะเบียน", "me")
+    #send_dataframe_as_line_flex(df1, "รายงาน HN ไม่มีวันลงทะเบียน", "me")
     #==================================#
 
     df2 = fetch_count_pt_dep()
@@ -18,7 +18,7 @@ def main():
     send_report_to_telegram(df2, "รายงาน ผู้มาใช้บริการแยกแผนก", "test")
     send_dataframe_as_image(df2, "รายงาน ผู้มาใช้บริการแยกแผนก", "test")
     #send_report_to_line(df2, "รายงาน ผู้มาใช้บริการแยกแผนก", "me")
-    send_dataframe_as_line_flex(df2, "รายงาน ผู้มาใช้บริการแยกแผนก", "me")
+    send_dataframe_as_line_flex(df2, "รายงาน ผู้มาใช้บริการแยกแผนก", "doc")
 
 if __name__ == "__main__":
     main()
