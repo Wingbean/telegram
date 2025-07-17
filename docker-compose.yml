@@ -1,22 +1,4 @@
 services:
-  web:
-    build: .
-
-    image: telegram:250717
-
-    container_name: telegram
-
-    env_file:
-      - .env
-
-    environment: # <--- เพิ่มส่วนนี้เข้ามา
-      - FLASK_APP=app
-
-    restart: unless-stopped
-
-version: '3.8'
-
-services:
   telegram-scheduler:
     # Build Image จาก Dockerfile ในโฟลเดอร์ปัจจุบัน (.)
     build: .
