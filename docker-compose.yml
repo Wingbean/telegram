@@ -1,0 +1,36 @@
+services:
+  web:
+    build: .
+
+    image: telegram:250717
+
+    container_name: telegram
+
+    env_file:
+      - .env
+
+    environment: # <--- เพิ่มส่วนนี้เข้ามา
+      - FLASK_APP=app
+
+    restart: unless-stopped
+
+version: '3.8'
+
+services:
+  telegram-scheduler:
+    # Build Image จาก Dockerfile ในโฟลเดอร์ปัจจุบัน (.)
+    build: .
+    
+    # ตั้งชื่อ container ให้จำง่าย
+    container_name: telegram_bot_scheduler
+    
+    # ตั้งค่าให้ container เริ่มทำงานใหม่เสมอเมื่อ Docker หรือเครื่องดับแล้วเปิดใหม่
+    restart: always
+    
+    # ตั้งค่า Timezone ให้เป็นเวลาประเทศไทย
+    environment:
+      - TZ=Asia/Bangkok
+      
+    # เชื่อมต่อ (Mount) โฟลเดอร์ภายนอกเข้ากับภายใน container
+    volumes:
+      - ./logs:/app/logs
