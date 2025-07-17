@@ -1,3 +1,5 @@
+# pip install mysql-connector-python
+
 import mysql.connector
 from config.settings import DB_CONFIG
 

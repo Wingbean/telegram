@@ -1,3 +1,5 @@
+#pip install pandas
+
 import pandas as pd
 from decimal import Decimal
 from mysql.connector import Error

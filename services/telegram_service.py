@@ -1,5 +1,4 @@
 #pip install matplotlib
-#pip install dataframe-image
 
 import requests
 from config.settings import TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_IDS

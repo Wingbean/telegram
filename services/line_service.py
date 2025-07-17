@@ -1,3 +1,7 @@
+# pip install requests
+# pip install tabulate
+# pip install dataframe-image
+
 import requests
 from datetime import date
 from tabulate import tabulate
